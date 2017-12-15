@@ -14,7 +14,8 @@ func main() {
 
 	calls, err := ParseProgram(string(file))
 	if err != nil {
-		panic(err)
+		fmt.Fprintf(os.Stderr, "%s\n", err.Error())
+		os.Exit(1)
 	} else if len(calls) > 16 {
 		err = fmt.Errorf("program too long (got %d, max is %d)", len(calls), 16)
 		panic(err)

@@ -68,7 +68,7 @@ func ParseProgram(prog string) ([]Call, error) {
 	var res []Call
 
 	lines := strings.Split(prog, "\n")
-	for _, line := range lines {
+	for i, line := range lines {
 		line = strings.ToUpper(line)
 		line = strings.TrimSpace(line)
 
@@ -78,6 +78,7 @@ func ParseProgram(prog string) ([]Call, error) {
 
 		call, err := ParseLine(line)
 		if err != nil {
+			err = fmt.Errorf("error while parsing\n\n%d: %s\n\n%s", i, line, err.Error())
 			return res, err
 		}
 
