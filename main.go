@@ -19,10 +19,14 @@ func main() {
 	lines := strings.Split(string(file), "\n")
 	for _, line := range lines {
 		line = strings.ToUpper(line)
-		call, has, err := ParseLine(line)
-		if !has {
+		line = strings.TrimSpace(line)
+
+		if len(line) == 0 {
 			continue
-		} else if err != nil {
+		}
+
+		call, err := ParseLine(line)
+		if err != nil {
 			panic(err)
 		}
 

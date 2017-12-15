@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
 )
@@ -27,33 +28,38 @@ type Call struct {
 	arg     byte
 }
 
-func makeCall(commandName string, arg byte) Call {
+func makeCall(commandName string, arg byte) (Call, error) {
 	var command Command
+	has := false
+
 	for _, cmd := range commands {
 		if cmd.name == commandName {
 			command = cmd
+			has = true
 			break
 		}
 	}
 
-	return Call{command, arg}
+	var err error = nil
+	if !has {
+		err = fmt.Errorf("no command '%s' found", commandName)
+	}
+	return Call{command, arg}, err
 }
 
-func ParseLine(line string) (Call, bool, error) {
-	line = strings.TrimSpace(line)
+func ParseLine(line string) (Call, error) {
 	words := strings.Split(line, " ")
-	if len(words) == 0 {
-		return Call{}, false, nil
-	}
 
 	name := words[0]
 	var arg byte
 	if len(words) > 1 {
 		val, err := strconv.ParseInt(words[1], 0, 8)
 		if err != nil {
-			return Call{}, true, err
+			return Call{}, err
 		}
 		arg = byte(val)
 	}
-	return makeCall(name, arg), true, nil
+
+	call, err := makeCall(name, arg)
+	return call, err
 }
