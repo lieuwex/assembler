@@ -21,17 +21,7 @@ func main() {
 	}
 
 	ops := CallsToOps(calls)
-
-	var roms [7]uint32
-	for shift, op := range ops {
-		romCol := 1 << uint32(shift)
-		for rom, _ := range roms {
-			opCol := 1 << uint32(rom)
-			if op&byte(opCol) != 0 {
-				roms[rom] |= uint32(romCol)
-			}
-		}
-	}
+	roms := BuildRom(ops)
 
 	for _, rom := range roms {
 		fmt.Printf("%08X\n", rom)
