@@ -1,0 +1,4 @@
+LDA 12
+LDB 5
+ADDAB
+MAB
