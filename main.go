@@ -39,35 +39,4 @@ func main() {
 	for _, rom := range roms {
 		fmt.Printf("%08X\n", rom)
 	}
-
-	/*
-		for i, _ := range roms { // 0, meest rechter
-			// 1, 1 naar links
-			for shift, op := range ops {
-				// roms[i] |= uint32(op) & (1 << uint32(shift))
-				// roms[i] |= uint32(op) & uint32(i+1)
-				// roms[i] |= uint32(op) & (1 << uint32(i))
-				// roms[i] |= (uint32(op) & (1 << uint32(i))) << uint32(shift)
-
-				// roms[i][-shift] = op[i]
-				roms[i] |= (uint32(op) & uint32(i)) & (1 << uint32(shift))
-			}
-		}
-
-		for rom, _ := range roms {
-			var chars [32]byte
-			for i, op := range ops {
-				opstr := strconv.FormatInt(int64(op), 2)
-				index := len(opstr) - rom - 1
-				if index < 0 {
-					index = 0
-				}
-				chars[31-i] = opstr[index]
-			}
-		}
-
-		for _, rom := range roms {
-			fmt.Printf("%032b\n", rom)
-		}
-	*/
 }
