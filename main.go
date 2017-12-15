@@ -20,10 +20,7 @@ func main() {
 		panic(err)
 	}
 
-	var ops [16]byte
-	for i, call := range calls {
-		ops[i] = call.command.opcode<<4 + call.arg
-	}
+	ops := CallsToOps(calls)
 
 	var roms [7]uint32
 	for shift, op := range ops {
