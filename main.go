@@ -7,7 +7,13 @@ import (
 )
 
 func main() {
-	file, err := ioutil.ReadFile(os.Args[1])
+	var file []byte
+	var err error
+	if len(os.Args) == 2 {
+		file, err = ioutil.ReadFile(os.Args[1])
+	} else {
+		file, err = ioutil.ReadAll(os.Stdin)
+	}
 	if err != nil {
 		panic(err)
 	}
