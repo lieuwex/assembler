@@ -53,7 +53,7 @@ func ParseLine(line string) (Call, error) {
 	name := words[0]
 	var arg byte
 	if len(words) > 1 {
-		val, err := strconv.ParseInt(words[1], 0, 8)
+		val, err := strconv.ParseInt(words[1], 0, 5)
 		if err != nil {
 			return Call{}, err
 		}
