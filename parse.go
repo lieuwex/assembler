@@ -63,3 +63,26 @@ func ParseLine(line string) (Call, error) {
 	call, err := makeCall(name, arg)
 	return call, err
 }
+
+func ParseProgram(prog string) ([]Call, error) {
+	var res []Call
+
+	lines := strings.Split(prog, "\n")
+	for _, line := range lines {
+		line = strings.ToUpper(line)
+		line = strings.TrimSpace(line)
+
+		if len(line) == 0 {
+			continue
+		}
+
+		call, err := ParseLine(line)
+		if err != nil {
+			return res, err
+		}
+
+		res = append(res, call)
+	}
+
+	return res, nil
+}

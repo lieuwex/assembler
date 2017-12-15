@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
-	"strings"
 )
 
 func main() {
@@ -13,27 +12,17 @@ func main() {
 		panic(err)
 	}
 
+	calls, err := ParseProgram(string(file))
+	if err != nil {
+		panic(err)
+	} else if len(calls) > 16 {
+		err = fmt.Errorf("program too long (got %d, max is %d)", len(calls), 16)
+		panic(err)
+	}
+
 	var ops [16]byte
-	current := 0
-
-	lines := strings.Split(string(file), "\n")
-	for _, line := range lines {
-		line = strings.ToUpper(line)
-		line = strings.TrimSpace(line)
-
-		if len(line) == 0 {
-			continue
-		}
-
-		call, err := ParseLine(line)
-		if err != nil {
-			panic(err)
-		}
-
-		if current < 16 {
-			ops[current] = call.command.opcode<<4 + call.arg
-			current++
-		}
+	for i, call := range calls {
+		ops[i] = call.command.opcode<<4 + call.arg
 	}
 
 	var roms [7]uint32
