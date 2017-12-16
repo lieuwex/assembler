@@ -47,17 +47,28 @@ func makeCall(commandName string, arg byte) (Call, error) {
 	return Call{command, arg}, err
 }
 
+func parseNumber(str string) (byte, error) {
+	base := 0
+	if strings.Index(str, "0B") == 0 {
+		base = 2
+		str = str[2:]
+	}
+
+	res, err := strconv.ParseUint(str, base, 4)
+	return byte(res), err
+}
+
 func ParseLine(line string) (Call, error) {
 	words := strings.Split(line, " ")
 
 	name := words[0]
 	var arg byte
 	if len(words) > 1 {
-		val, err := strconv.ParseInt(words[1], 0, 5)
+		var err error
+		arg, err = parseNumber(words[1])
 		if err != nil {
 			return Call{}, err
 		}
-		arg = byte(val)
 	}
 
 	call, err := makeCall(name, arg)
