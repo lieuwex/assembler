@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"regexp"
 	"strconv"
 	"strings"
 )
@@ -75,6 +76,8 @@ func ParseLine(line string) (Call, error) {
 	return call, err
 }
 
+var commentRegex = regexp.MustCompile(";.+$")
+
 func ParseProgram(prog string) ([]Call, error) {
 	var res []Call
 
@@ -82,6 +85,7 @@ func ParseProgram(prog string) ([]Call, error) {
 	for i, line := range lines {
 		line = strings.ToUpper(line)
 		line = strings.TrimSpace(line)
+		line = commentRegex.ReplaceAllLiteralString(line, "")
 
 		if len(line) == 0 {
 			continue
