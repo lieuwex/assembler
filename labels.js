@@ -25,12 +25,15 @@ function readFile (file) {
 		.map(line => line.trim())
 		.filter(line => line.length > 0);
 
-	lines.forEach((line, i) => {
+	let i = -1;
+	for (const line of lines) {
 		const res = declareRegex.exec(line);
-		if (res != null) {
-			addLabel(i, res[1]);
+		if (res == null) {
+			i++;
+		} else {
+			addLabel(i+1, res[1]);
 		}
-	})
+	}
 }
 
 function replaceFile (file) {
