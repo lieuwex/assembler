@@ -14,14 +14,14 @@ type Command struct {
 }
 
 var commands = [...]Command{
-	{"LDA", 4, true},
-	{"LDB", 5, true},
-	{"SHLA", 1, false},
-	{"SHRA", 2, false},
-	{"MAB", 6, false},
-	{"ADDAB", 0, false},
-	{"NOTA", 3, false},
-	{"JC", 7, true},
+	{"LDA", 5, true},
+	{"LDB", 6, true},
+	{"SHLA", 2, false},
+	{"SHRA", 3, false},
+	{"MAB", 7, false},
+	{"ADDAB", 1, false},
+	{"NOTA", 4, false},
+	{"JC", 0, true},
 }
 
 type Call struct {
